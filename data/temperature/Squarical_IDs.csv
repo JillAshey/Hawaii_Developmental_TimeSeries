@@ -1,0 +1,19 @@
+﻿Tank,Treatment ,LoggerID,Notes
+High1_Tank,High,21002982,NA
+Squarical1,High,20937873,NA
+Squarical2,High,21002972,NA
+Squarical3,High,21335982,Labeled as Tank 5 in logger
+High2_Tank,High,20937868,NA
+Squarical4,High,20937872,NA
+Squarical5,High,21002980,NA
+Squarical6,High,20937871,NA
+Amb1_Tank,Ambient,21002974,NA
+Squarical7,Ambient,21002977,NA
+Squarical8,Ambient,20937870,NA
+Squarical9,Ambient,21335981,Labeled as Tank 7 in logger
+Amb2_Tank,Ambient,21335980,NA
+Squarical10,Ambient,21002979,NA
+Squarical11,Ambient,21002981,NA
+Squarical12,Ambient,21002976,NA
+High_Header,High,21002973,NA
+Amb_Header,Ambient,21002975,NA
