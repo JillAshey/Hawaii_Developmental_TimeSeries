@@ -24,55 +24,57 @@ Squaricals 7-12: Ambient
 ## Read data in and parse date & time
 ```{r}
 # High Header
-high_header <- read.csv("data/temperature/20220619/High_Header_20220619.csv", sep=",", header=T, na.strings = "NA")[ ,2:4]
+high_header <- read.csv("data/temperature/20220628/High_Header_20220628.csv", sep=",", header=T, na.strings = "NA")[ ,2:4]
 colnames(high_header) <- c("Date", "Temperature_High_Header", "Light-High_Header")
 high_header$Date <- parse_date_time(high_header$Date, "mdyHMS", tz = "HST")
 high_header$Treatment <- "High"
 
 # High Tank 1
-high_tank1 <- read.csv("data/temperature/20220619/High1_Tank_20220619.csv", sep=",", header=T, na.strings = "NA")[ ,2:4]
+high_tank1 <- read.csv("data/temperature/20220628/High1_Tank_20220628.csv", sep=",", header=T, na.strings = "NA")[ ,2:4]
 colnames(high_tank1) <- c("Date", "Temperature_High_Tank1", "Light-High_Tank1")
 high_tank1$Date <- parse_date_time(high_tank1$Date, "mdyHMS", tz = "HST")
 high_tank1$Treatment <- "High"
 
 # High Tank 2
-high_tank2 <- read.csv("data/temperature/20220619/High2_Tank_20220619.csv", sep=",", header=T, na.strings = "NA")[ ,2:4]
+high_tank2 <- read.csv("data/temperature/20220628/High2_Tank_20220628.csv", sep=",", header=T, na.strings = "NA")[ ,2:4]
 colnames(high_tank2) <- c("Date", "Temperature_High_Tank2", "Light-High_Tank2")
 high_tank2$Date <- parse_date_time(high_tank2$Date, "mdyHMS", tz = "HST")
 high_tank2$Treatment <- "High"
 
 # High Squarical 1
-high_sq1 <- read.csv("data/temperature/20220619/Squarical1_20220619.csv", sep=",", header=T, na.strings = "NA")[ ,2:4]
+high_sq1 <- read.csv("data/temperature/20220628/Squarical1_20220628.csv", sep=",", header=T, na.strings = "NA")[ ,2:4]
 colnames(high_sq1) <- c("Date", "Temperature_High_Sq1", "Light-High_Sq1")
 high_sq1$Date <- parse_date_time(high_sq1$Date, "mdyHMS", tz = "HST")
 high_sq1$Treatment <- "High"
 
 # High Squarical 2
-high_sq2 <- read.csv("data/temperature/20220619/Squarical2_20220619.csv", sep=",", header=T, na.strings = "NA")[ ,2:4]
+high_sq2 <- read.csv("data/temperature/20220628/Squarical2_20220628.csv", sep=",", header=T, na.strings = "NA")[ ,2:4]
 colnames(high_sq2) <- c("Date", "Temperature_High_Sq2", "Light-High_Sq2")
 high_sq2$Date <- parse_date_time(high_sq2$Date, "mdyHMS", tz = "HST")
 high_sq2$Treatment <- "High"
 
 # High Squarical 3
+################################################### No logger data after 6/19/22
 high_sq3 <- read.csv("data/temperature/20220619/Squarical3_20220619.csv", sep=",", header=T, na.strings = "NA")[ ,2:4]
 colnames(high_sq3) <- c("Date", "Temperature_High_Sq3", "Light-High_Sq3")
 high_sq3$Date <- parse_date_time(high_sq3$Date, "mdyHMS", tz = "HST")
 high_sq3$Treatment <- "High"
 
 # High Squarical 4
+################################################### No logger data after 6/19/22
 high_sq4 <- read.csv("data/temperature/20220619/Squarical4_20220619.csv", sep=",", header=T, na.strings = "NA")[ ,2:4]
 colnames(high_sq4) <- c("Date", "Temperature_High_Sq4", "Light-High_Sq4")
 high_sq4$Date <- parse_date_time(high_sq4$Date, "mdyHMS", tz = "HST")
 high_sq4$Treatment <- "High"
 
 # High Squarical 5
-high_sq5 <- read.csv("data/temperature/20220619/Squarical5_20220619.csv", sep=",", header=T, na.strings = "NA")[ ,2:4]
+high_sq5 <- read.csv("data/temperature/20220628/Squarical5_20220628.csv", sep=",", header=T, na.strings = "NA")[ ,2:4]
 colnames(high_sq5) <- c("Date", "Temperature_High_Sq5", "Light-High_Sq5")
 high_sq5$Date <- parse_date_time(high_sq5$Date, "mdyHMS", tz = "HST")
 high_sq5$Treatment <- "High"
 
 # High Squarical 6
-high_sq6 <- read.csv("data/temperature/20220619/Squarical6_20220619.csv", sep=",", header=T, na.strings = "NA")[ ,2:4]
+high_sq6 <- read.csv("data/temperature/20220628/Squarical6_20220628.csv", sep=",", header=T, na.strings = "NA")[ ,2:4]
 colnames(high_sq6) <- c("Date", "Temperature_High_Sq6", "Light-High_Sq6")
 high_sq6$Date <- parse_date_time(high_sq6$Date, "mdyHMS", tz = "HST")
 high_sq6$Treatment <- "High"
@@ -80,55 +82,57 @@ high_sq6$Treatment <- "High"
 
 ## Ambient
 # Ambient Header
-amb_header <- read.csv("data/temperature/20220619/Amb_Header_20220619.csv", sep=",", header=T, na.strings = "NA")[ ,2:4]
+amb_header <- read.csv("data/temperature/20220628/Amb_Header_20220628.csv", sep=",", header=T, na.strings = "NA")[ ,2:4]
 colnames(amb_header) <- c("Date", "Temperature_Amb_Header", "Light-Amb_Header")
 amb_header$Date <- parse_date_time(amb_header$Date, "mdyHMS", tz = "HST")
 amb_header$Treatment <- "Ambient"
 
 # Amb Tank 1
-amb_tank1 <- read.csv("data/temperature/20220619/Amb1_Tank_20220619.csv", sep=",", header=T, na.strings = "NA")[ ,2:4]
+amb_tank1 <- read.csv("data/temperature/20220628/Amb1_Tank_20220628.csv", sep=",", header=T, na.strings = "NA")[ ,2:4]
 colnames(amb_tank1) <- c("Date", "Temperature_Amb_Tank1", "Light-Amb_Tank1")
 amb_tank1$Date <- parse_date_time(amb_tank1$Date, "mdyHMS", tz = "HST")
 amb_tank1$Treatment <- "Ambient"
 
 # Amb Tank 2
-amb_tank2 <- read.csv("data/temperature/20220619/Amb2_Tank_20220619.csv", sep=",", header=T, na.strings = "NA")[ ,2:4]
+amb_tank2 <- read.csv("data/temperature/20220628/Amb2_Tank_20220628.csv", sep=",", header=T, na.strings = "NA")[ ,2:4]
 colnames(amb_tank2) <- c("Date", "Temperature_Amb_Tank2", "Light-Amb_Tank2")
 amb_tank2$Date <- parse_date_time(amb_tank2$Date, "mdyHMS", tz = "HST")
 amb_tank2$Treatment <- "Ambient"
 
 # Ambient Squarical 7
+################################################### No logger data after 6/19/22
 amb_sq7 <- read.csv("data/temperature/20220619/Squarical7_20220619.csv", sep=",", header=T, na.strings = "NA")[ ,2:4]
 colnames(amb_sq7) <- c("Date", "Temperature_Amb_Sq7", "Light-Amb_Sq7")
 amb_sq7$Date <- parse_date_time(amb_sq7$Date, "mdyHMS", tz = "HST")
 amb_sq7$Treatment <- "Ambient"
 
 # Ambient Squarical 8
-amb_sq8 <- read.csv("data/temperature/20220619/Squarical8_20220619.csv", sep=",", header=T, na.strings = "NA")[ ,2:4]
+amb_sq8 <- read.csv("data/temperature/20220628/Squarical8_20220628.csv", sep=",", header=T, na.strings = "NA")[ ,2:4]
 colnames(amb_sq8) <- c("Date", "Temperature_Amb_Sq8", "Light-Amb_Sq8")
 amb_sq8$Date <- parse_date_time(amb_sq8$Date, "mdyHMS", tz = "HST")
 amb_sq8$Treatment <- "Ambient"
 
 # Ambient Squarical 9
-amb_sq9 <- read.csv("data/temperature/20220619/Squarical9_20220619.csv", sep=",", header=T, na.strings = "NA")[ ,2:4]
+amb_sq9 <- read.csv("data/temperature/20220628/Squarical9_20220628.csv", sep=",", header=T, na.strings = "NA")[ ,2:4]
 colnames(amb_sq9) <- c("Date", "Temperature_Amb_Sq9", "Light-Amv_Sq9")
 amb_sq9$Date <- parse_date_time(amb_sq9$Date, "mdyHMS", tz = "HST")
 amb_sq9$Treatment <- "Ambient"
 
 # Ambient Squarical 10
+################################################### No logger data after 6/19/22
 amb_sq10 <- read.csv("data/temperature/20220619/Squarical10_20220619.csv", sep=",", header=T, na.strings = "NA")[ ,2:4]
 colnames(amb_sq10) <- c("Date", "Temperature_Amb_Sq10", "Light-Amb_Sq10")
 amb_sq10$Date <- parse_date_time(amb_sq10$Date, "mdyHMS", tz = "HST")
 amb_sq10$Treatment <- "Ambient"
 
 # Ambient Squarical 11
-amb_sq11 <- read.csv("data/temperature/20220619/Squarical11_20220619.csv", sep=",", header=T, na.strings = "NA")[ ,2:4]
+amb_sq11 <- read.csv("data/temperature/20220628/Squarical11_20220628.csv", sep=",", header=T, na.strings = "NA")[ ,2:4]
 colnames(amb_sq11) <- c("Date", "Temperature_Amb_Sq11", "Light-Amb_Sq11")
 amb_sq11$Date <- parse_date_time(amb_sq11$Date, "mdyHMS", tz = "HST")
 amb_sq11$Treatment <- "Ambient"
 
 # Ambient Squarical 12
-amb_sq12 <- read.csv("data/temperature/20220619/Squarical12_20220619.csv", sep=",", header=T, na.strings = "NA")[ ,2:4]
+amb_sq12 <- read.csv("data/temperature/20220628/Squarical12_20220628.csv", sep=",", header=T, na.strings = "NA")[ ,2:4]
 colnames(amb_sq12) <- c("Date", "Temperature_Amb_Sq12", "Light-Amb_Sq12")
 amb_sq12$Date <- parse_date_time(amb_sq12$Date, "mdyHMS", tz = "HST")
 amb_sq12$Treatment <- "Ambient"
@@ -216,9 +220,27 @@ ggsave("output/temperature/Prelim.High.Treatments.pdf", plot = last_plot(), widt
 ```
 
 
+plot to see where how fast the high treatments ramp 
+```{r}
+test <- data %>% filter(Date < "2022-06-12 11:00:00", Date > "2022-06-12 09:40:00")
 
+plot <- ggplot(test, aes(x=Date, y=value)) +
+  geom_line(aes(color = Location), size = 1) +
+  ylab("Temperature °C") +
+  scale_color_manual(values=c("blue","blue","blue", "blue", "blue", "blue", "blue", "blue", "blue", "red", "red", "red", "red", "red", "red", "red", "red", "red"))
+plot
+```
 
+Looking at high treatment during this window of time 
+```{r}
+high_test <- test %>% filter(Treatment == "High") 
 
+plot2 <- ggplot(high_test, aes(x=Date, y=value)) +
+  geom_line(aes(color = Location), size = 1) +
+  ylab("Temperature °C") +
+  scale_color_manual(values=c("darkred","red","red", "red", "red", "red", "red", "pink", "pink"))
+plot2
+```
 
 
 
