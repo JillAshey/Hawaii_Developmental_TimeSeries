@@ -89,7 +89,7 @@ light.trt <- ggplot(SW.chem, aes(x=Treatment, y=Light_PAR)) +
   geom_boxplot(aes(color = Tank), size = 1) +
   ylab("Light (PAR)") +
   theme(axis.text.x = element_text(angle = 90)) +
-  scale_color_manual(values=c("lightblue","lightblue","darkblue", "darkred", "pink", "pink"))
+  scale_color_manual(values=c("lightblue","lightblue", "pink", "pink"))
 light.trt
 
 # Save treatment plots
