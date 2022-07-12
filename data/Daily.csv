@@ -203,15 +203,33 @@
 20220709,7/9/22,15:00,20220618,High_Header,Temperature ramp,Adult,26.8,-74,36.32,NA,partly cloudy,NA
 20220709,7/9/22,15:00,20220618,High_Tank1,Temperature ramp,Adult,28.5,-78.8,36.91,34,partly cloudy,NA
 20220709,7/9/22,15:00,20220618,High_Tank2,Temperature ramp,Adult,28.7,-79.8,36.88,40,partly cloudy,NA
-20220710,7/10/22,8:45,20220618,Ambient_Header,Temperature ramp,Adult,26.2,NA,NA,NA,Scattered clouds,NA
-20220710,7/10/22,8:45,20220618,Amb_Tank1,Temperature ramp,Adult,25.7,NA,NA,32,Scattered clouds,NA
-20220710,7/10/22,8:45,20220618,Amb_Tank2,Temperature ramp,Adult,25.4,NA,NA,27,Scattered clouds,NA
-20220710,7/10/22,8:45,20220618,High_Header,Temperature ramp,Adult,26.2,NA,NA,NA,Scattered clouds,"After measurements were taken, single 500W heater was added to header"
-20220710,7/10/22,8:45,20220618,High_Tank1,Temperature ramp,Adult,26.3,NA,NA,33,Scattered clouds,NA
-20220710,7/10/22,8:45,20220618,High_Tank2,Temperature ramp,Adult,26.1,NA,NA,32,Scattered clouds,NA
-20220710,7/10/22,10:15,20220618,Ambient_Header,Temperature ramp,Adult,26.4,-67.2,36.86,NA,Mostly sunny,NA
-20220710,7/10/22,10:15,20220618,Amb_Tank1,Temperature ramp,Adult,25.9,-68.9,36.88,190,Mostly sunny,NA
-20220710,7/10/22,10:15,20220618,Amb_Tank2,Temperature ramp,Adult,25.8,-70.2,37.05,170,Mostly sunny,NA
-20220710,7/10/22,10:15,20220618,High_Header,Temperature ramp,Adult,28.8,-71,37.05,NA,Mostly sunny,NA
-20220710,7/10/22,10:15,20220618,High_Tank1,Temperature ramp,Adult,27.6,-68.5,36.96,269,Mostly sunny,"after measurements were taken, single 300W heater was added to each high tank"
-20220710,7/10/22,10:15,20220618,High_Tank2,Temperature ramp,Adult,27.2,-70.8,36.91,120,Mostly sunny,"after measurements were taken, single 300W heater was added to each high tank"
+20220710,7/10/22,8:45,20220710,Ambient_Header,Temperature ramp,Adult,26.2,NA,NA,NA,Scattered clouds,NA
+20220710,7/10/22,8:45,20220710,Amb_Tank1,Temperature ramp,Adult,25.7,NA,NA,32,Scattered clouds,NA
+20220710,7/10/22,8:45,20220710,Amb_Tank2,Temperature ramp,Adult,25.4,NA,NA,27,Scattered clouds,NA
+20220710,7/10/22,8:45,20220710,High_Header,Temperature ramp,Adult,26.2,NA,NA,NA,Scattered clouds,"After measurements were taken, single 500W heater was added to header"
+20220710,7/10/22,8:45,20220710,High_Tank1,Temperature ramp,Adult,26.3,NA,NA,33,Scattered clouds,NA
+20220710,7/10/22,8:45,20220710,High_Tank2,Temperature ramp,Adult,26.1,NA,NA,32,Scattered clouds,NA
+20220710,7/10/22,10:15,20220710,Ambient_Header,Temperature ramp,Adult,26.4,-67.2,36.86,NA,Mostly sunny,NA
+20220710,7/10/22,10:15,20220710,Amb_Tank1,Temperature ramp,Adult,25.9,-68.9,36.88,190,Mostly sunny,NA
+20220710,7/10/22,10:15,20220710,Amb_Tank2,Temperature ramp,Adult,25.8,-70.2,37.05,170,Mostly sunny,NA
+20220710,7/10/22,10:15,20220710,High_Header,Temperature ramp,Adult,28.8,-71,37.05,NA,Mostly sunny,NA
+20220710,7/10/22,10:15,20220710,High_Tank1,Temperature ramp,Adult,27.6,-68.5,36.96,269,Mostly sunny,"after measurements were taken, single 300W heater was added to each high tank"
+20220710,7/10/22,10:15,20220710,High_Tank2,Temperature ramp,Adult,27.2,-70.8,36.91,120,Mostly sunny,"after measurements were taken, single 300W heater was added to each high tank"
+20220710,7/10/22,12:10,20220710,Ambient_Header,Temperature ramp,Adult,26.7,-73.9,36.87,NA,Cloudy,NA
+20220710,7/10/22,12:10,20220710,Amb_Tank1,Temperature ramp,Adult,26.7,-75,36.96,187,Cloudy,NA
+20220710,7/10/22,12:10,20220710,Amb_Tank2,Temperature ramp,Adult,26.6,-75.9,36.93,191,Cloudy,NA
+20220710,7/10/22,12:10,20220710,High_Header,Temperature ramp,Adult,28.3,-75.6,36.88,NA,Cloudy,NA
+20220710,7/10/22,12:10,20220710,High_Tank1,Temperature ramp,Adult,29.4,-76.9,37.04,165,Cloudy,NA
+20220710,7/10/22,12:10,20220710,High_Tank2,Temperature ramp,Adult,28.5,-76,36.95,170,Cloudy,NA
+20220710,7/10/22,19:00,20220710,Ambient_Header,Temperature ramp,Adult,26.5,-68.4,37.03,NA,Cloudy/night,NA
+20220710,7/10/22,19:00,20220710,Amb_Tank1,Temperature ramp,Adult,26.1,-73.7,37.06,NA,Cloudy/night,NA
+20220710,7/10/22,19:00,20220710,Amb_Tank2,Temperature ramp,Adult,26.1,-72.4,37.11,NA,Cloudy/night,NA
+20220710,7/10/22,19:00,20220710,High_Header,Temperature ramp,Adult,28.2,-66.7,37.01,NA,Cloudy/night,NA
+20220710,7/10/22,19:00,20220710,High_Tank1,Temperature ramp,Adult,28.9,-75.4,37.14,NA,Cloudy/night,NA
+20220710,7/10/22,19:00,20220710,High_Tank2,Temperature ramp,Adult,27.8,-76.4,37.11,NA,Cloudy/night,NA
+20220711,7/11/22,19:00,20220710,Ambient_Header,Temperature ramp,Adult,26.6,-70.1,37.04,NA,Dusk,NA
+20220711,7/11/22,19:00,20220710,Amb_Tank1,Temperature ramp,Adult,26.1,-73.8,37.08,NA,Dusk,NA
+20220711,7/11/22,19:00,20220710,Amb_Tank2,Temperature ramp,Adult,26.1,-77.1,37.14,NA,Dusk,NA
+20220711,7/11/22,19:00,20220710,High_Header,Temperature ramp,Adult,28.2,-71,37.09,NA,Dusk,NA
+20220711,7/11/22,19:00,20220710,High_Tank1,Temperature ramp,Adult,29.9,-76.2,37.24,NA,Dusk,NA
+20220711,7/11/22,19:00,20220710,High_Tank2,Temperature ramp,Adult,30.8,-75.6,37.2,NA,Dusk,NA
