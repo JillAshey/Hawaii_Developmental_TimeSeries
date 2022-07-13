@@ -233,3 +233,15 @@
 20220711,7/11/22,19:00,20220710,High_Header,Temperature ramp,Adult,28.2,-71,37.09,NA,Dusk,NA
 20220711,7/11/22,19:00,20220710,High_Tank1,Temperature ramp,Adult,29.9,-76.2,37.24,NA,Dusk,NA
 20220711,7/11/22,19:00,20220710,High_Tank2,Temperature ramp,Adult,30.8,-75.6,37.2,NA,Dusk,NA
+20220712,7/12/22,8:40,20220710,Ambient_Header,Temperature ramp,Adult,26.2,NA,NA,NA,"Sunny, some clouds",NA
+20220712,7/12/22,8:40,20220710,Amb_Tank1,Temperature ramp,Adult,25.5,NA,NA,76,"Sunny, some clouds",NA
+20220712,7/12/22,8:40,20220710,Amb_Tank2,Temperature ramp,Adult,24.9,NA,NA,53,"Sunny, some clouds",NA
+20220712,7/12/22,8:40,20220710,High_Header,Temperature ramp,Adult,28.2,NA,NA,NA,"Sunny, some clouds",NA
+20220712,7/12/22,8:40,20220710,High_Tank1,Temperature ramp,Adult,29.5,NA,NA,70,"Sunny, some clouds",NA
+20220712,7/12/22,8:40,20220710,High_Tank2,Temperature ramp,Adult,29.8,NA,NA,46,"Sunny, some clouds",NA
+20220712,7/12/22,20:00,20220710,Ambient_Header,Temperature ramp,Adult,26.7,NA,NA,NA,Night,NA
+20220712,7/12/22,20:00,20220710,Amb_Tank1,Temperature ramp,Adult,26.3,NA,NA,NA,Night,NA
+20220712,7/12/22,20:00,20220710,Amb_Tank2,Temperature ramp,Adult,26.2,NA,NA,NA,Night,NA
+20220712,7/12/22,20:00,20220710,High_Header,Temperature ramp,Adult,29.1,NA,NA,NA,Night,NA
+20220712,7/12/22,20:00,20220710,High_Tank1,Temperature ramp,Adult,20.5,NA,NA,NA,Night,NA
+20220712,7/12/22,20:00,20220710,High_Tank2,Temperature ramp,Adult,30.6,NA,NA,NA,Night,NA
