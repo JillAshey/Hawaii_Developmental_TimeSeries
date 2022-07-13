@@ -245,3 +245,9 @@
 20220712,7/12/22,20:00,20220710,High_Header,Temperature ramp,Adult,29.1,NA,NA,NA,Night,NA
 20220712,7/12/22,20:00,20220710,High_Tank1,Temperature ramp,Adult,20.5,NA,NA,NA,Night,NA
 20220712,7/12/22,20:00,20220710,High_Tank2,Temperature ramp,Adult,30.6,NA,NA,NA,Night,NA
+20220713,7/13/22,8:30,20220710,Ambient_Header,Exposure,Adult,26.3,-69.7,36.65,NA,Cloudy,NA
+20220713,7/13/22,8:30,20220710,Amb_Tank1,Exposure,Adult,25.8,-71,36.66,77,Cloudy,NA
+20220713,7/13/22,8:30,20220710,Amb_Tank2,Exposure,Adult,25.3,-70.8,36.56,67,Cloudy,NA
+20220713,7/13/22,8:30,20220710,High_Header,Exposure,Adult,28.5,-71.4,36.51,NA,Cloudy,NA
+20220713,7/13/22,8:30,20220710,High_Tank1,Exposure,Adult,29.9,-69.7,36.99,71,Cloudy,NA
+20220713,7/13/22,8:30,20220710,High_Tank2,Exposure,Adult,29.9,-69.8,36.88,78,Cloudy,NA
