@@ -7,6 +7,9 @@ output: html_document
 
 This script analyzes and plots PR data from adult acute thermal stress exposure from HIMB 2022.
 
+When I exported the data from Presens measurement software, I exported as excel. The excel format is not the correct one for this script but there is no option in the Presens software to export files as csv. I'm using the Putnam lab PC and it seems like I am the first person to be making measurements with the Presens software on this computer. Maybe need to update the software.
+
+
 ## Load packages
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
@@ -70,15 +73,33 @@ metadata <- metadata %>%
 df <- tibble(file.name = file.names) %>%
   mutate(colony_id = gsub("_.*", "", file.name),                              # Get colony_id from filename
           info = map(colony_id, ~filter(metadata, colony_id == .)),           # Get associated sample info
-         data0 = map(file.name, ~read_csv(file.path(path.p, .), skip = 1)))   # Get associated O2 data
+         data0 = map(file.name, ~read_csv(file.path(path.p, .))))   # Get associated O2 data
+
+## need to break up date and time column for csv files!!!!!!!!!!!!!!!!!!
+
+
+
+
+
+
+
 
 # Select only Time, Value, and Temp columns from O2 data
 df <- df %>%
-  mutate(data0 = map(data0, ~select(., Time, Value, Temp)))   
+  mutate(data0 = map(data0, ~select(., Date, Oxygen, Temperature)))   
 ```
 
-When I exported the data from Presens measurement software, I exported as excel. The excel format is not the correct one for this script but there is no option in the Presens software to export files as csv. I'm using the Putnam lab PC and it seems like I am the first person to be making measurements with the Presens software on this computer. Maybe need to update the software.
-
+## Use the time breaks in the sample info to link O2 data with light levels
+```{r}
+df <- df %>%
+  mutate(intervals = map2(data0, info, function(.x, .y) {
+    split(.x, f = cut(as.numeric(.x$Date), breaks = as.numeric(c(.y$Start.time, last(.y$Stop.time))),
+                      labels = as.character(.y$Light_Value)))})) %>%
+  mutate(data = map(intervals, ~ unnest(tibble(.), .id = "Light_Value")))
+## 'data' now contains the O2 data with the corresponding light level as another column
+## Example of what 'data' for each sample looks like:
+df$data[[1]]
+```
 
 
 

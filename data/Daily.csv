@@ -275,3 +275,15 @@
 20220714,7/14/22,12:00,20220709,High_Header,Exposure,Adult,30,-78.2,36.61,NA,"Sunny, some clouds",NA
 20220714,7/14/22,12:00,20220709,High_Tank1,Exposure,Adult,32.6,-82.7,36.87,419,"Sunny, some clouds",NA
 20220714,7/14/22,12:00,20220709,High_Tank2,Exposure,Adult,32.1,-81.8,36.8,404,"Sunny, some clouds",NA
+20220715,7/15/22,18:45,20220709,Ambient_Header,Exposure,Adult,27.1,-74.9,36.73,NA,"Dusk, cloudy",NA
+20220715,7/15/22,18:45,20220709,Amb_Tank1,Exposure,Adult,27.5,-80.4,36.79,NA,"Dusk, cloudy",NA
+20220715,7/15/22,18:45,20220709,Amb_Tank2,Exposure,Adult,27.9,-81.5,36.73,NA,"Dusk, cloudy",NA
+20220715,7/15/22,18:45,20220709,High_Header,Exposure,Adult,27.6,-73.3,36.77,NA,"Dusk, cloudy",NA
+20220715,7/15/22,18:45,20220709,High_Tank1,Exposure,Adult,30.2,-82.8,37.06,NA,"Dusk, cloudy",NA
+20220715,7/15/22,18:45,20220709,High_Tank2,Exposure,Adult,30.8,-81.8,36.99,NA,"Dusk, cloudy",NA
+20220716,7/15/22,12:30,20220709,Ambient_Header,Exposure,Adult,26.9,-77.4,36.63,NA,Mostly cloudy,NA
+20220716,7/15/22,12:30,20220709,Amb_Tank1,Exposure,Adult,27.2,-79.5,36.66,103,Mostly cloudy,NA
+20220716,7/15/22,12:30,20220709,Amb_Tank2,Exposure,Adult,27,-79.5,36.69,76,Mostly cloudy,NA
+20220716,7/15/22,12:30,20220709,High_Header,Exposure,Adult,27.1,-78.6,36.61,NA,Mostly cloudy,NA
+20220716,7/15/22,12:30,20220709,High_Tank1,Exposure,Adult,30.9,-82.5,36.93,86,Mostly cloudy,NA
+20220716,7/15/22,12:30,20220709,High_Tank2,Exposure,Adult,31.2,-81.2,36.98,85,Mostly cloudy,NA

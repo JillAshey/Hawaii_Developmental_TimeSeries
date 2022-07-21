@@ -5,7 +5,7 @@ date: '2022-07-11'
 output: html_document
 ---
 
-This script plots temperature and light data from an adult acute thermal stress experiment at HIMB 2022. 
+This script plots Hobo temperature and light data from an adult acute thermal stress experiment at HIMB 2022. 
 
 ## Load packages
 ```{r setup, include=FALSE}
@@ -16,41 +16,31 @@ library(emmeans)
 library(gridExtra)
 ```
 
-## Read data in and parse date & time
+## Read data in 
 ```{r}
 ## Ambient
 # Ambient Header
 amb_header <- read.csv("data/temperature/20220714/Amb_Header_20220714.csv", sep=",", header=T, na.strings = "NA")[ ,2:4]
-#colnames(amb_header) <- c("Date", "Temperature_Amb_Header", "Light-Amb_Header")
-#amb_header$Date <- parse_date_time(amb_header$Date, "mdyHMS", tz = "HST")
 amb_header$Treatment <- "Ambient"
 amb_header$Tank <- "Ambient-Header"
 
 # Amb Tank 1 A
 amb_tank1_A <- read.csv("data/temperature/20220714/Amb1_Tank_A_20220714.csv", sep=",", header=T, na.strings = "NA")[ ,2:4]
-#colnames(amb_tank1_A) <- c("Date", "Temperature_Amb_Tank1-A", "Light-Amb_Tank1-A")
-#amb_tank1_A$Date <- parse_date_time(amb_tank1_A$Date, "mdyHMS", tz = "HST")
 amb_tank1_A$Treatment <- "Ambient"
 amb_tank1_A$Tank <- "Ambient1-Tank-A"
 
 # Amb Tank 1 B
 amb_tank1_B <- read.csv("data/temperature/20220714/Amb1_Tank_B_20220714.csv", sep=",", header=T, na.strings = "NA")[ ,2:4]
-#colnames(amb_tank1_B) <- c("Date", "Temperature_Amb_Tank1-B", "Light-Amb_Tank1-B")
-#amb_tank1_B$Date <- parse_date_time(amb_tank1_B$Date, "mdyHMS", tz = "HST")
 amb_tank1_B$Treatment <- "Ambient"
 amb_tank1_B$Tank <- "Ambient1-Tank-B"
 
 # Amb Tank 2 A
 amb_tank2_A <- read.csv("data/temperature/20220714/Amb2_Tank_A_20220714.csv", sep=",", header=T, na.strings = "NA")[ ,2:4]
-#colnames(amb_tank2_A) <- c("Date", "Temperature_Amb_Tank2-A", "Light-Amb_Tank2-A")
-#amb_tank2_A$Date <- parse_date_time(amb_tank2_A$Date, "mdyHMS", tz = "HST")
 amb_tank2_A$Treatment <- "Ambient"
 amb_tank2_A$Tank <- "Ambient2-Tank-A"
 
 # Amb Tank 2 B
 amb_tank2_B <- read.csv("data/temperature/20220714/Amb2_Tank_B_20220714.csv", sep=",", header=T, na.strings = "NA")[ ,2:4]
-#colnames(amb_tank2_B) <- c("Date", "Temperature_Amb_Tank2-B", "Light-Amb_Tank2-B")
-#amb_tank2_B$Date <- parse_date_time(amb_tank2_B$Date, "mdyHMS", tz = "HST")
 amb_tank2_B$Treatment <- "Ambient"
 amb_tank2_B$Tank <- "Ambient2-Tank-B"
 
@@ -59,41 +49,31 @@ amb_tank2_B$Tank <- "Ambient2-Tank-B"
 ## High
 # High Header
 high_header <- read.csv("data/temperature/20220714/High_Header_20220714.csv", sep=",", header=T, na.strings = "NA")[ ,2:4]
-#colnames(high_header) <- c("Date", "Temperature_High_Header", "Light-High_Header")
-#high_header$Date <- parse_date_time(high_header$Date, "mdyHMS", tz = "HST")
 high_header$Treatment <- "High"
 high_header$Tank <- "High-Header"
 
 # High Tank 1 A
 high_tank1_A <- read.csv("data/temperature/20220714/High1_Tank_A_20220714.csv", sep=",", header=T, na.strings = "NA")[ ,2:4]
-#colnames(high_tank1_A) <- c("Date", "Temperature_High_Tank1-A", "Light-High_Tank1-A")
-#high_tank1_A$Date <- parse_date_time(high_tank1_A$Date, "mdyHMS", tz = "HST")
 high_tank1_A$Treatment <- "High"
 high_tank1_A$Tank <- "High1-Tank-A"
 
 # High Tank 1 B
 high_tank1_B <- read.csv("data/temperature/20220714/High1_Tank_B_20220714.csv", sep=",", header=T, na.strings = "NA")[ ,2:4]
-#colnames(high_tank1_B) <- c("Date", "Temperature_High_Tank1-B", "Light-High_Tank1-B")
-#high_tank1_B$Date <- parse_date_time(high_tank1_B$Date, "mdyHMS", tz = "HST")
 high_tank1_B$Treatment <- "High"
 high_tank1_B$Tank <- "High1-Tank-B"
 
 # High Tank 2 A
 high_tank2_A <- read.csv("data/temperature/20220714/High2_Tank_A_20220714.csv", sep=",", header=T, na.strings = "NA")[ ,2:4]
-#colnames(high_tank2_A) <- c("Date", "Temperature_High_Tank2-A", "Light-High_Tank2-A")
-#high_tank2_A$Date <- parse_date_time(high_tank2_A$Date, "mdyHMS", tz = "HST")
 high_tank2_A$Treatment <- "High"
 high_tank2_A$Tank <- "High2-Tank-A"
 
 # High Tank 2 B
 high_tank2_B <- read.csv("data/temperature/20220714/High2_Tank_B_20220714.csv", sep=",", header=T, na.strings = "NA")[ ,2:4]
-#colnames(high_tank2_B) <- c("Date", "Temperature_High_Tank2-B", "Light-High_Tank2-B")
-#high_tank2_B$Date <- parse_date_time(high_tank2_B$Date, "mdyHMS", tz = "HST")
 high_tank2_B$Treatment <- "High"
 high_tank2_B$Tank <- "High2-Tank-B"
 ```
 
-## Bind dataframes together 
+## Bind dataframes together and parse data & time
 ```{r}
 data <- rbind(amb_header, amb_tank1_A, amb_tank1_B, amb_tank2_A, amb_tank2_B,
                 high_header, high_tank1_A, high_tank1_B, high_tank2_A, high_tank2_B)
