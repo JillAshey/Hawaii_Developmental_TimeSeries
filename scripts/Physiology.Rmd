@@ -1,0 +1,209 @@
+---
+title: "Physiology"
+output: html_document
+date: "2023-09-26"
+---
+
+This script analyzes and plots data for Developmental Timeseries 2023 physiology measurements including protein, carbohydrates, and lipids, and correlations between these variables. This script is based off of AH's [script](https://github.com/AHuffmyer/SymbioticIntegration/blob/main/Mcap2021/Scripts/Physiology.Rmd).
+
+# Set up 
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+if (!require("dplyr")) install.packages("dplyr")
+if (!require("readr")) install.packages("readr")
+if (!require("stringr")) install.packages("stringr")
+if (!require("gridExtra")) install.packages("gridExtra")
+if (!require("grid")) install.packages("grid")
+if (!require("ggplot2")) install.packages("ggplot2")
+if (!require("lattice")) install.packages("lattice")
+if (!require("Rmisc")) install.packages("Rmisc")
+if (!require("ggpubr")) install.packages("ggpubr")
+if (!require("lsmeans")) install.packages("lsmeans")
+if (!require("tidyverse")) install.packages("tidyverse")
+if (!require("car")) install.packages("car")
+if (!require("ggpubr")) install.packages("ggpubr")
+if (!require("kableExtra")) install.packages("kableExtra")
+if (!require("ggcorrplot")) install.packages("ggcorrplot")
+if (!require("corrr")) install.packages("corrr")
+if (!require("GGally")) install.packages("GGally")
+if (!require("cowplot")) install.packages("cowplot")
+
+library(dplyr)
+library(readr)
+library(stringr)
+library(gridExtra)
+library(grid)
+library(ggplot2)
+library(lattice)
+library(Rmisc)
+library(ggpubr)
+library(lsmeans)
+library(tidyverse)
+library(car)
+library(kableExtra)
+library(ggcorrplot)
+library(corrr)
+library(GGally)
+library(cowplot)
+
+getwd()
+```
+
+# Set plot theme 
+
+```{r}
+custom_theme<-theme_classic() + 
+  theme(axis.text = element_text(size=12, color="black"), 
+        axis.title=element_text(size=12, color="black", face="bold"), 
+        legend.text=element_text(size=12, color="black"), 
+        legend.title=element_text(size=12, face="bold", color="black"))
+```
+
+# Protein
+
+## Load data 
+
+Read in datafiles
+
+```{r}
+protein <- read.csv("2023/data/Physiology/SolubleProtein_Data.csv")
+prot_meta <- read.csv("2023/data/Physiology/SolubleProtein_Meta.csv")
+meta <- read.csv("2023/data/Tube_Meta.csv")
+```
+
+## Prepare dataframes 
+
+Remove unneeded rows from meta dataframe 
+
+```{r}
+meta <- meta %>%
+  filter(Metric == "Physiology")
+```
+
+Merge Files and rename columns
+
+```{r}
+protein <- merge(prot_meta, protein, by = c("Well", "Run"))
+protein <- left_join(protein, meta, by=c("TubeID"))
+
+# Blank correction for each run separately
+
+Blank <- protein %>% 
+  filter(Sample.Type == "Blank") %>%
+  summarise(blk.avg = mean(x562))
+
+protein$abs.corr <- protein$x562 - Blank$blk.avg
+```
+
+Plot regressions for each run.  
+
+```{r}
+protein %>% 
+  filter(Sample.Type == "Standard")%>%
+
+  ggplot(aes(x=Concentration, y=abs.corr))+
+  facet_wrap(~ Run)+
+  ylab("Absorbance (nm)")+ xlab("Protein (ug/mL)") + 
+  geom_point()+
+  ggtitle("Run")+
+  geom_smooth(method = "lm") +
+  stat_regline_equation(label.y = 1.0, aes(label = after_stat(eq.label))) +
+  custom_theme
+```
+
+Run a loop to extract regression for each run and calculate protein concentration.  
+
+```{r}
+run_list<-c("1", "2", "3", "4", "5", "6")
+
+df_protein = data.frame()
+
+for (run in 1) {
+
+  #subset data
+Standard <- protein %>% 
+  filter(Sample.Type == "Standard")%>%
+  filter(Run==run)
+  
+#generate standard curve equation
+lmstandard <- lm (Concentration ~ abs.corr, data = Standard)
+lmsummary <- summary(lmstandard) 
+
+#select samples
+Samples <- protein %>% #subsetting Samples
+  filter(Sample.Type == "Sample ")
+  filter(Run==run)
+
+#calculate concentration
+Samples$Concentration <- predict(lmstandard, newdata = Samples) #using model to get concentration
+
+#add run column
+#Samples$Run<-run
+
+#normalize to homogenate volume
+#Samples$Protein.ug <- Samples$Concentration * (Samples$Resuspension_volume / 1000) * (25/Samples$Homo_vol)
+
+#join dataframes
+df <- data.frame(Samples)
+df_protein <- rbind(df_protein,df)
+
+} 
+```
+
+
+Plot results 
+
+```{r}
+# Order the 'hpf' variable in a specific order
+df_protein$hpf <- factor(df_protein$hpf, levels = c("1 hpf", "4 hpf", "9 hpf", "14 hpf", "22 hpf", "28 hpf", "48 hpf", "72 hpf"))
+
+Protein.Plot <- df_protein%>%
+  ggplot(aes(x=hpf, y=Concentration, fill = Treatment)) +
+  geom_boxplot(width=.5, outlier.shape= NA, position = position_dodge(width = 0.4)) +
+  geom_point(pch = 21, position=position_jitterdodge(dodge.width=0.4)) +
+  xlab("hpf") + ylab(expression(bold("Soluble Protein " (ug)))) + #Axis titles
+  facet_grid(. ~ Fraction) +  # Use facet_grid to separate bars by 'Fraction'
+  scale_fill_manual(values = c("blue", "red", "gray")) +
+  custom_theme; Protein.Plot
+```
+
+## Calculate Ratio of host:holobiont   
+
+Calculate the ratio of host:holobiont protein. 
+```{r}
+ratios<-df_protein%>%
+  dplyr::select(TubeID, Treatment, Fraction, Concentration, hpf)%>%
+  group_by(TubeID, Fraction, Treatment, hpf)%>%
+  dplyr::summarise(mean_protein=mean(Concentration))%>%
+  spread(Fraction, mean_protein)%>%
+  mutate(ratio=Host/Holobiont)%>%
+  mutate(sholo_ratio=Symbiont/Holobiont)
+  
+```
+
+Plot Host:Holobiont ratios  
+
+```{r}
+Ratio.Plot <- ratios%>%
+  ggplot(aes(x=Treatment, y=ratio, colour=Treatment)) +
+  geom_boxplot(width=.5, outlier.shape= NA, position = position_dodge(width = 0.4)) +
+  geom_point(aes(fill=Treatment), pch = 21, position=position_jitterdodge(dodge.width=0.4), size=4, alpha=0.5) +
+  scale_colour_manual(values=c("blue", "red"))+
+  scale_fill_manual(values=c("blue", "red"))+
+  xlab("Temperature") + 
+  ylab("Host:Holobiont Protein") + #Axis titles
+  custom_theme; Ratio.Plot 
+```
+
+Test for differences with an anova.  
+
+```{r}
+model<-aov(ratio~Treatment*hpf, data=ratios)
+summary(model)
+```
+
+
+
+
