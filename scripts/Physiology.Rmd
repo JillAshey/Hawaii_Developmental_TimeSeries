@@ -68,9 +68,14 @@ custom_theme<-theme_classic() +
 Read in datafiles
 
 ```{r}
-protein <- read.csv("2023/data/Physiology/SolubleProtein_Data.csv")
-prot_meta <- read.csv("2023/data/Physiology/SolubleProtein_Meta.csv")
-meta <- read.csv("2023/data/Tube_Meta.csv")
+protein <- read.csv("../2023/data/Physiology/SolubleProtein_Data.csv")
+
+prot_meta <- read.csv("../2023/data/Physiology/SolubleProtein_Meta.csv")
+prot_meta <- prot_meta %>%
+  mutate(Homo_vol = ifelse(Sample.Type == "Sample", 25, NA)) %>%
+  mutate(Resusp_vol = ifelse(Sample.Type == "Sample", 500, NA)) 
+
+meta <- read.csv("../2023/data/sample_metadata/tube_meta.csv")
 ```
 
 ## Prepare dataframes 
@@ -116,11 +121,11 @@ protein %>%
 Run a loop to extract regression for each run and calculate protein concentration.  
 
 ```{r}
-run_list<-c("1", "2", "3", "4", "5", "6")
+run_list<-c("1", "2", "3", "4", "5", "6", "7", "8")
 
 df_protein = data.frame()
 
-for (run in 1) {
+for (run in run_list) {
 
   #subset data
 Standard <- protein %>% 
@@ -133,7 +138,7 @@ lmsummary <- summary(lmstandard)
 
 #select samples
 Samples <- protein %>% #subsetting Samples
-  filter(Sample.Type == "Sample ")
+  filter(Sample.Type == "Sample") %>%
   filter(Run==run)
 
 #calculate concentration
@@ -143,7 +148,7 @@ Samples$Concentration <- predict(lmstandard, newdata = Samples) #using model to 
 #Samples$Run<-run
 
 #normalize to homogenate volume
-#Samples$Protein.ug <- Samples$Concentration * (Samples$Resuspension_volume / 1000) * (25/Samples$Homo_vol)
+Samples$Protein.ug <- Samples$Concentration * (Samples$Resusp_vol / 1000) * (25/Samples$Homo_vol)
 
 #join dataframes
 df <- data.frame(Samples)
@@ -156,11 +161,15 @@ df_protein <- rbind(df_protein,df)
 Plot results 
 
 ```{r}
-# Order the 'hpf' variable in a specific order
-df_protein$hpf <- factor(df_protein$hpf, levels = c("1 hpf", "4 hpf", "9 hpf", "14 hpf", "22 hpf", "28 hpf", "48 hpf", "72 hpf"))
+# Keep only Mcap results
+df_protein_mcap <- df_protein %>%
+  filter(Species == "Montipora capitata")
 
-Protein.Plot <- df_protein%>%
-  ggplot(aes(x=hpf, y=Concentration, fill = Treatment)) +
+# Order the 'hpf' variable in a specific order
+df_protein_mcap$hpf <- factor(df_protein_mcap$hpf, levels = c("1 hpf", "4 hpf", "9 hpf", "14 hpf", "22 hpf", "28 hpf", "48 hpf", "72 hpf"))
+
+Protein.Plot <- df_protein_mcap%>%
+  ggplot(aes(x=hpf, y=Protein.ug, fill = Treatment)) +
   geom_boxplot(width=.5, outlier.shape= NA, position = position_dodge(width = 0.4)) +
   geom_point(pch = 21, position=position_jitterdodge(dodge.width=0.4)) +
   xlab("hpf") + ylab(expression(bold("Soluble Protein " (ug)))) + #Axis titles
@@ -169,39 +178,103 @@ Protein.Plot <- df_protein%>%
   custom_theme; Protein.Plot
 ```
 
-## Calculate Ratio of host:holobiont   
+## Calculate protein/ug/larvae 
 
-Calculate the ratio of host:holobiont protein. 
+Calculate protein/ug/larvae
 ```{r}
-ratios<-df_protein%>%
-  dplyr::select(TubeID, Treatment, Fraction, Concentration, hpf)%>%
-  group_by(TubeID, Fraction, Treatment, hpf)%>%
-  dplyr::summarise(mean_protein=mean(Concentration))%>%
-  spread(Fraction, mean_protein)%>%
-  mutate(ratio=Host/Holobiont)%>%
-  mutate(sholo_ratio=Symbiont/Holobiont)
-  
+df_protein_mcap<-df_protein_mcap%>%
+  dplyr::select(TubeID, Treatment, Fraction, Protein.ug, hpf, EmbryosPerTube)%>%
+  group_by(Fraction, Treatment, hpf)%>%
+  mutate(Protein.ug.larvae = Protein.ug/EmbryosPerTube)%>%
+  na.omit()
+  #mutate(Protein.mg = Protein.ug/1000)%>%
+  #mutate(Protein.mg.larvae = Protein.mg/EmbryosPerTube)
+  #dplyr::summarise(mean_protein=mean(Protein.ug.larvae))
+
+
+
+# %>%
+#   spread(Fraction, mean_protein)%>%
+#   mutate(ratio=Host/Holobiont)%>%
+#   mutate(sym_holo_ratio=Symbiont/Holobiont)%>%
+#   na.omit()
 ```
 
-Plot Host:Holobiont ratios  
+### Plot data 
 
+Plot holo, host and sym protein 
 ```{r}
-Ratio.Plot <- ratios%>%
-  ggplot(aes(x=Treatment, y=ratio, colour=Treatment)) +
+holo.protein.plot <- df_protein_mcap%>%
+  filter(Fraction == "Holobiont")%>%
+  ggplot(aes(x=hpf, y=Protein.ug.larvae, fill = Treatment)) +
   geom_boxplot(width=.5, outlier.shape= NA, position = position_dodge(width = 0.4)) +
-  geom_point(aes(fill=Treatment), pch = 21, position=position_jitterdodge(dodge.width=0.4), size=4, alpha=0.5) +
-  scale_colour_manual(values=c("blue", "red"))+
-  scale_fill_manual(values=c("blue", "red"))+
-  xlab("Temperature") + 
-  ylab("Host:Holobiont Protein") + #Axis titles
-  custom_theme; Ratio.Plot 
+  geom_point(pch = 21, position=position_jitterdodge(dodge.width=0.4)) +
+  xlab("hpf") + 
+  #facet_grid(. ~ Fraction) +  # Use facet_grid to separate bars by 'Fraction'
+  #ylab(expression(bold("Soluble Protein " (ug)))) + #Axis titles
+  scale_fill_manual(values = c("blue", "red")) +
+  custom_theme; holo.protein.plot
+
+host.protein.plot <- df_protein_mcap%>%
+  filter(Fraction == "Host")%>%
+  ggplot(aes(x=hpf, y=Protein.ug.larvae, fill = Treatment)) +
+  geom_boxplot(width=.5, outlier.shape= NA, position = position_dodge(width = 0.4)) +
+  geom_point(pch = 21, position=position_jitterdodge(dodge.width=0.4)) +
+  xlab("hpf") + 
+  #facet_grid(. ~ Fraction) +  # Use facet_grid to separate bars by 'Fraction'
+  #ylab(expression(bold("Soluble Protein " (ug)))) + #Axis titles
+  scale_fill_manual(values = c("blue", "red")) +
+  custom_theme; host.protein.plot
+
+sym.protein.plot <- df_protein_mcap%>%
+  filter(Fraction == "Symbiont")%>%
+  ggplot(aes(x=hpf, y=Protein.ug.larvae, fill = Treatment)) +
+  geom_boxplot(width=.5, outlier.shape= NA, position = position_dodge(width = 0.4)) +
+  geom_point(pch = 21, position=position_jitterdodge(dodge.width=0.4)) +
+  xlab("hpf") + 
+  #facet_grid(. ~ Fraction) +  # Use facet_grid to separate bars by 'Fraction'
+  #ylab(expression(bold("Soluble Protein " (ug)))) + #Axis titles
+  scale_fill_manual(values = c("blue", "red")) +
+  custom_theme; sym.protein.plot
 ```
+
+Remove outliers 
+
+```{r}
+
+#set quantile values
+q <- c(0.25, 0.75)
+
+# calculate quantile values by Temperature and Treatment groups
+Quants <- df_protein_mcap %>%
+  group_by(Treatment, hpf, Fraction) %>%
+  summarize(quant25 = quantile(df_protein_mcap, probs = q[1]),
+            quant75 = quantile(df_protein_mcap, probs = q[2]),
+            IQRbyGroup=IQR(df_protein_mcap))
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 Test for differences with an anova.  
 
 ```{r}
-model<-aov(ratio~Treatment*hpf, data=ratios)
+model<-aov(Concentration~Treatment*hpf, data=df_protein)
 summary(model)
+
+## Differences
 ```
 
 
