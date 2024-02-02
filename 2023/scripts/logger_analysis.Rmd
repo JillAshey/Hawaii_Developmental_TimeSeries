@@ -23,11 +23,13 @@ library(seacarb)
 library(broom)
 library(cowplot)
 library(emmeans)
+
+getwd()
 ```
 
 ## Read in Tidbit Hobo logger files 
 ```{r}
-tidbit.files <- list.files(path="2023/data/environmental/logger", pattern="*27.csv", full.names=TRUE)
+tidbit.files <- list.files(path="../data/environmental/logger", pattern="*27.csv", full.names=TRUE)
 
 tidbits <- setNames(tidbit.files, tidbit.files) %>%
     map_dfr(read_csv, .id = "logger") %>%
@@ -43,7 +45,7 @@ tidbits$DateTime<-as.POSIXct(tidbits$DateTime, format="%m/%d/%Y %H:%M:%S", tz="P
 
 ## Read in U22 Hobo logger files 
 ```{r}
-u22.files <- list.files(path="2023/data/environmental/logger", pattern="*30.csv", full.names=TRUE)
+u22.files <- list.files(path="../data/environmental/logger", pattern="*30.csv", full.names=TRUE)
 
 u22 <- setNames(u22.files, u22.files) %>%
     map_dfr(read_csv, .id = "logger") %>%
@@ -69,13 +71,12 @@ levels(as.factor(loggers$logger)) ## 8 loggers, as expected. 2 per incubator and
 ```{r}
 loggers <- loggers%>%
   filter(DateTime < as.POSIXct("2023-06-20 21:00:00"))%>%
-  filter(DateTime > as.POSIXct("2023-06-16 21:00:00"))
+  filter(DateTime > as.POSIXct("2023-06-17 18:00:00"))
 ```
-
 
 ## Read in treatment information that assigns the loggers to a specific treatment
 ```{r}
-metadata <- read.csv("2023/data/environmental/logger_meta.csv")
+metadata <- read.csv("../data/environmental/logger_meta.csv")
 metadata$logger <- as.character(metadata$logger)
 ```
 
@@ -121,18 +122,18 @@ temp_plot_treatment1<-loggers%>%
   geom_vline(xintercept=as.POSIXct("2023-06-20 21:00:00"), linetype="dashed", color="black")+
   #ylim(26, 30)+
   ylab("Temperature (°C)")+
-  xlab("Date Time")+
+  #xlab("Date Time")+
   scale_colour_manual(values=c("blue", "red"), name="Temperature")+
   scale_fill_manual(values=c("blue", "red"), name="Temperature")+
   theme_classic()+
   theme(
     axis.text=element_text(color="black", size=11),
-    axis.title=element_text(color="black", size=14),
-    legend.position="none"
+    axis.title=element_text(color="black", size=14)
+    #legend.position="none"
   ); temp_plot_treatment1
 
 # Save plot 
-ggsave("2023/figures/environmental/logger_temperature_smooth.png", temp_plot_treatment1, width=6, height=4)
+ggsave("../figures/environmental/logger_temperature_smooth.png", temp_plot_treatment1, width=6, height=4)
 ```
 
 ## Calculate the mean difference in temperature treatments between groups.  

@@ -47,6 +47,9 @@ library(ggcorrplot)
 library(corrr)
 library(GGally)
 library(cowplot)
+library(ggsignif)
+library(ggstatsplot)
+
 
 getwd()
 ```
@@ -239,18 +242,77 @@ sym.protein.plot <- df_protein_mcap%>%
 ```
 
 Remove outliers 
+```{r}
+remove_outliers <- function(x) {
+  qnt <- quantile(x, probs=c(.25, .75))
+  H <- 1.5 * IQR(x)
+  x[x > (qnt[2] + H) | x < (qnt[1] - H)] <- NA
+  return(x)
+}
+
+df_protein_mcap_clean <- df_protein_mcap %>%
+  group_by(Treatment, Fraction, hpf) %>%
+  mutate(Protein.ug.larvae = remove_outliers(Protein.ug.larvae)) %>%
+  ungroup() %>%
+  na.omit(Protein.ug.larvae)
+```
+
+Plot holo, host and sym protein with outliers removed 
+```{r}
+holo.protein.plot <- df_protein_mcap_clean%>%
+  filter(Fraction == "Holobiont")%>%
+  ggplot(aes(x=hpf, y=Protein.ug.larvae, fill = Treatment)) +
+  geom_boxplot(width=.5, outlier.shape= NA, position = position_dodge(width = 0.4)) +
+  geom_point(pch = 21, position=position_jitterdodge(dodge.width=0.4)) +
+  xlab("hpf") + 
+  #facet_grid(. ~ Fraction) +  # Use facet_grid to separate bars by 'Fraction'
+  #ylab(expression(bold("Soluble Protein " (ug)))) + #Axis titles
+  scale_fill_manual(values = c("blue", "red")) +
+  custom_theme; holo.protein.plot
+
+host.protein.plot <- df_protein_mcap_clean%>%
+  filter(Fraction == "Host")%>%
+  ggplot(aes(x=hpf, y=Protein.ug.larvae, fill = Treatment)) +
+  geom_boxplot(width=.5, outlier.shape= NA, position = position_dodge(width = 0.4)) +
+  geom_point(pch = 21, position=position_jitterdodge(dodge.width=0.4)) +
+  xlab("hpf") + 
+  #facet_grid(. ~ Fraction) +  # Use facet_grid to separate bars by 'Fraction'
+  #ylab(expression(bold("Soluble Protein " (ug)))) + #Axis titles
+  scale_fill_manual(values = c("blue", "red")) +
+  custom_theme; host.protein.plot
+
+sym.protein.plot <- df_protein_mcap_clean%>%
+  filter(Fraction == "Symbiont")%>%
+  ggplot(aes(x=hpf, y=Protein.ug.larvae, fill = Treatment)) +
+  geom_boxplot(width=.5, outlier.shape= NA, position = position_dodge(width = 0.4)) +
+  geom_point(pch = 21, position=position_jitterdodge(dodge.width=0.4)) +
+  xlab("hpf") + 
+  #facet_grid(. ~ Fraction) +  # Use facet_grid to separate bars by 'Fraction'
+  #ylab(expression(bold("Soluble Protein " (ug)))) + #Axis titles
+  scale_fill_manual(values = c("blue", "red")) +
+  custom_theme; sym.protein.plot
+```
 
 ```{r}
+sym <- df_protein_mcap_clean %>%
+  filter(Fraction == "Symbiont")
 
-#set quantile values
-q <- c(0.25, 0.75)
+res.aov <- aov(Protein.ug.larvae ~ Treatment*hpf, data = sym)
+summary(res.aov)
 
-# calculate quantile values by Temperature and Treatment groups
-Quants <- df_protein_mcap %>%
-  group_by(Treatment, hpf, Fraction) %>%
-  summarize(quant25 = quantile(df_protein_mcap, probs = q[1]),
-            quant75 = quantile(df_protein_mcap, probs = q[2]),
-            IQRbyGroup=IQR(df_protein_mcap))
+holo <- df_protein_mcap_clean %>%
+  filter(Fraction == "Holobiont")
+
+res.aov <- aov(Protein.ug.larvae ~ Treatment*hpf, data = holo)
+summary(res.aov)
+
+host <- df_protein_mcap_clean %>%
+  filter(Fraction == "Host")
+
+res.aov <- aov(Protein.ug.larvae ~ Treatment*hpf, data = host)
+summary(res.aov)
+
+TukeyHSD(res.aov)
 ```
 
 
@@ -265,17 +327,6 @@ Quants <- df_protein_mcap %>%
 
 
 
-
-
-
-Test for differences with an anova.  
-
-```{r}
-model<-aov(Concentration~Treatment*hpf, data=df_protein)
-summary(model)
-
-## Differences
-```
 
 
 
